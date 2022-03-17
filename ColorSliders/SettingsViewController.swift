@@ -62,15 +62,24 @@ class SettingsViewController: UIViewController {
     @IBAction func textFieldChanged(_ sender: UITextField) {
         switch sender {
         case redLabelTF:
-            guard let decimalNumber = Float(redLabelTF.text ?? "0") else { return }
+            guard let decimalNumber = Float(redLabelTF.text ?? "0") else {
+                return showAlert(
+                    title: "Incorrect value",
+                    message: "Please, enter a decimal value in the format: 0.00")}
             redSlider.value = decimalNumber
             redValueChanged()
         case greenLabelTF:
-            guard let decimalNumber = Float(greenLabelTF.text ?? "0") else { return }
+            guard let decimalNumber = Float(greenLabelTF.text ?? "0") else {
+                return showAlert(
+                    title: "Incorrect value",
+                    message: "Please, enter a decimal value in the format: 0.00")}
             greenSlider.value = decimalNumber
             greenValueChanged()
         default:
-            guard let decimalNumber = Float(blueLabelTF.text ?? "0") else { return }
+            guard let decimalNumber = Float(blueLabelTF.text ?? "0") else {
+                return showAlert(
+                    title: "Incorrect value",
+                    message: "Please, enter a decimal value in the format: 0.00") }
             blueSlider.value = decimalNumber
             blueValueChanged()
         }
@@ -111,6 +120,12 @@ extension SettingsViewController {
     private func blueValueChanged() {
         blueLabel.text = String(format: "%.2f", blueSlider.value)
         blueLabelTF.text = String(format: "%.2f", blueSlider.value)
+    }
+    
+    private func showAlert(title: String, message: String) {
+        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "OK", style: .default))
+        present(alert, animated: true)
     }
 }
 
