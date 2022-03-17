@@ -58,28 +58,19 @@ class SettingsViewController: UIViewController {
         colorChanged()
     }
     
-    
     @IBAction func textFieldChanged(_ sender: UITextField) {
+        guard let decimalNumber = Float(sender.text ?? "0") else {
+            return showAlert(
+                title: "Incorrect value",
+                message: "Please, entry a decimal value in the format: 0.00")}
         switch sender {
         case redLabelTF:
-            guard let decimalNumber = Float(redLabelTF.text ?? "0") else {
-                return showAlert(
-                    title: "Incorrect value",
-                    message: "Please, enter a decimal value in the format: 0.00")}
             redSlider.value = decimalNumber
             redValueChanged()
         case greenLabelTF:
-            guard let decimalNumber = Float(greenLabelTF.text ?? "0") else {
-                return showAlert(
-                    title: "Incorrect value",
-                    message: "Please, enter a decimal value in the format: 0.00")}
             greenSlider.value = decimalNumber
             greenValueChanged()
         default:
-            guard let decimalNumber = Float(blueLabelTF.text ?? "0") else {
-                return showAlert(
-                    title: "Incorrect value",
-                    message: "Please, enter a decimal value in the format: 0.00") }
             blueSlider.value = decimalNumber
             blueValueChanged()
         }
