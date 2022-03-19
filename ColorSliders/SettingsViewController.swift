@@ -58,26 +58,6 @@ class SettingsViewController: UIViewController {
         colorChanged()
     }
     
-    @IBAction func textFieldChanged(_ sender: UITextField) {
-        guard let decimalNumber = Float(sender.text ?? "0") else {
-            return showAlert(
-                title: "Incorrect value",
-                message: "Please, entry a decimal value in the format: 0.00")}
-        switch sender {
-        case redLabelTF:
-            redSlider.value = decimalNumber
-            redValueChanged()
-        case greenLabelTF:
-            greenSlider.value = decimalNumber
-            greenValueChanged()
-        default:
-            blueSlider.value = decimalNumber
-            blueValueChanged()
-        }
-        
-        colorChanged()
-    }
-    
     @IBAction func doneButtonPressed() {
         view.endEditing(true)
         delegate.setNewColor(for: colorView.backgroundColor ?? .white)
@@ -123,7 +103,23 @@ extension SettingsViewController {
 //MARK: - UITextFieldDelegate
 extension SettingsViewController: UITextFieldDelegate {
     func textFieldDidEndEditing(_ textField: UITextField) {
-        textFieldChanged(textField)
+        guard let decimalNumber = Float(textField.text ?? "0") else {
+            return showAlert(
+                title: "Incorrect value",
+                message: "Please, entry a decimal value in the format: 0.00")}
+        switch textField {
+        case redLabelTF:
+            redSlider.value = decimalNumber
+            redValueChanged()
+        case greenLabelTF:
+            greenSlider.value = decimalNumber
+            greenValueChanged()
+        default:
+            blueSlider.value = decimalNumber
+            blueValueChanged()
+        }
+        
+        colorChanged()
     }
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
